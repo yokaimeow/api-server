@@ -3,3 +3,13 @@ Server:
   HttpPort: 8080
   ReadTimeout: 60
   WriteTimeout: 60
+
+Database:
+  DBType: postgres
+  UserName: postgres
+  Password: password
+  Host: 192.168.50.168
+  Port: 5432
+  DBName: iojelly
+  SSLMode: disable
+  TimeZone: Asia/Shanghai

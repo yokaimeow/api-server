@@ -12,10 +12,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/iojelly/api-server/global"
+	"github.com/iojelly/api-server/model"
 	"github.com/iojelly/api-server/pkg/setting"
 	log "github.com/sirupsen/logrus"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
 )
 
 var (
@@ -44,11 +43,15 @@ func init() {
 	// Only log the info severity or above.
 	log.SetLevel(log.InfoLevel)
 
-	dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
-	_, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	err = setupDBEngine()
 	if err != nil {
-		log.Fatal("Database connect error")
+		log.Fatal("init.setupDBEngine err: ", err)
 	}
+	//dsn := "host=localhost user=gorm password=gorm dbname=gorm port=9920 sslmode=disable TimeZone=Asia/Shanghai"
+	//_, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	//if err != nil {
+	//	log.Fatal("Database connect error")
+	//}
 }
 
 func main() {
@@ -114,6 +117,16 @@ func setupSetting() error {
 	}
 	if runMode != "" {
 		global.ServerSetting.RunMode = runMode
+	}
+
+	return nil
+}
+
+func setupDBEngine() error {
+	var err error
+	global.DBEngine, err = model.NewDBEngine(global.DatabaseSetting)
+	if err != nil {
+		return err
 	}
 
 	return nil

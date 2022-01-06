@@ -9,6 +9,16 @@ type ServerSettingS struct {
 	WriteTimeout time.Duration
 }
 
+type DatabaseSettingS struct {
+	Host     string
+	Port     string
+	UserName string
+	PassWord string
+	DBName   string
+	SSLMode  string
+	TimeZone string
+}
+
 var sections = make(map[string]interface{})
 
 func (s *Setting) ReadSection(k string, v interface{}) error {
