@@ -109,6 +109,10 @@ func setupSetting() error {
 	if err != nil {
 		return err
 	}
+	err = s.ReadSection("Database", &global.DatabaseSetting)
+	if err != nil {
+		return err
+	}
 
 	global.ServerSetting.ReadTimeout *= time.Second
 	global.ServerSetting.WriteTimeout *= time.Second
